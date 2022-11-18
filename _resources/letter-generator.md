@@ -8,6 +8,16 @@ page_js:
 
 
 Fill in the forms below and download the pdf.
+<form>
+  <fieldset>
+    Name: <input type="text" size="30" id="name"><br>
+    Title: <input type="text" size="30" id="title"><br>
+    CSEA ID (<a href="https://cseany.org/csea-member-id-lookup">Lookup Here </a>): <input type="test" size="30" id="csea_id"><br>
+    Email: <input type="text" size="30" id="email"><br>
+    Phone Number: <input type="text" size="30" id="phone">
+    <input type="button" value="Submit" onclick="test()"/>
+  </fieldset>
+</form>
 
 <script>
 
@@ -64,7 +74,7 @@ Fill in the forms below and download the pdf.
 // If your running in a Node environment, you could use fs.readFile()
 // In the browser, you could make a fetch() call and use res.arrayBuffer()
 
-const fonturl = "https://ncseasonal.com/assets/fonts/Carolina.ttf"
+const fonturl = "/assets/fonts/Carolina.ttf"
 const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer())
 
 // Load a PDF with form fields
@@ -78,7 +88,7 @@ const pdfDoc = await PDFDocument.load(
 const form = pdfDoc.getForm()
 
 pdfDoc.registerFontkit(fontkit)
-const timesRoman = await pdfDoc.embedFont(StandardFonts.timesRoman)
+const timesRoman = await pdfDoc.embedFont(StandardFonts.TimesRoman)
 const carolina =  await pdfDoc.embedFont(fontBytes)
 
 // Get all fields in the PDF by their names
@@ -92,15 +102,18 @@ const signField = form.getTextField('sign')
 
 
 // Fill in the basic info fields
-nameField.setText('Nick', {font: timesRoman},)
-idField.setText('12345678', {font: timesRoman},)
-emailField.setText('nyynuge@gmail.com', {font: timesRoman},)
-phoneField.setText('516-417-2758', {font: timesRoman},)
-titleField.setText('GA Seas', {font: timesRoman},)
-signField.setText('Nick S Nuge', {font: carolina},)
+nameField.setText(document.getElementById('name').value)
+idField.setText(document.getElementById('csea_id').value)
+emailField.setText(document.getElementById('email').value)
+phoneField.setText(document.getElementById('phone').value)
+titleField.setText(document.getElementById('title').value)
+signField.setText(document.getElementById('name').value)
 
+form.updateFieldAppearances(timesRoman);
 
+signField.updateAppearances(carolina);
 
+form.flatten();
 // Serialize the PDFDocument to bytes (a Uint8Array)
 const pdfBytes = await pdfDoc.save()
 
@@ -109,10 +122,11 @@ const pdfBytes = await pdfDoc.save()
 //   • Downloaded from the browser
 //   • Rendered in an <iframe>
 
-  renderInIframe(pdfBytes)
+  //renderInIframe(pdfBytes)
   downloadPdf(pdfBytes)
 }
-test()
+
 </script>
-<iframe id="iframe"></iframe>
-Then click this link to generate an email you can attach your letter to.
+
+<a href="mailto:nick@ncseasonal.com?subject=Grievance&body=Please%20find%20my%20grievance%20letter%20attached%20">Click here to open an email to send to the CSEA executives.
+Don't Forget to attach your letter!</a>
