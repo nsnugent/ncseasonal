@@ -1,9 +1,12 @@
 ---
 title: "Grievance Letter Generator"
 collection: resources
+excerpt: "Use this form to generator a grievance letter to send to CSEA"
 page_js:
  - https://unpkg.com/pdf-lib/dist/pdf-lib.min.js
  - https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js
+header:
+  teaser: /assets/images/letter-preview.png
 ---
 
 
