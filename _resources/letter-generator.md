@@ -6,6 +6,8 @@ collection: resources
 Fill in the forms below and download the pdf.
 
 
-<iframe src="https://docs.google.com/gview?url=http://ncseasonal.com/assets/pdfs/County+CBA+2008-2015_44-14.pdf&embedded=true" style="width:718px; height:700px;" frameborder="0"></iframe>
+<object width="400" height="500" type="application/pdf" data="https://www.ncseasonal.com/assets/pdfs/County+CBA+2008-2015_44-14.pdf&embedded=true">
+<p>Insert your error message here, if the PDF cannot be displayed.</p>
+</object>
 
 Then click this link to generate an email you can attach your letter to.
