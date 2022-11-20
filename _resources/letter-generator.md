@@ -7,6 +7,7 @@ page_js:
  - https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js
 header:
   teaser: /assets/images/letter-preview.png
+page_checkbox : True
 ---
 
 
@@ -17,8 +18,11 @@ Fill in the forms below and download the pdf.
     Title: <input type="text" size="30" id="title"><br>
     CSEA ID (<a href="https://cseany.org/csea-member-id-lookup">Lookup Here </a>): <input type="test" size="30" id="csea_id"><br>
     Email: <input type="text" size="30" id="email"><br>
-    Phone Number: <input type="text" size="30" id="phone">
-    <input type="button" value="Submit" onclick="test()"/>
+    Phone Number: <input type="text" size="30" id="phone"><br>
+    <label for="newsletter" style="word-wrap:break-word">
+      <input type="checkbox" class="larger-checkbox" id="newsletter" value=""/>   Subscribe to our Newsletter
+    </label>
+    <input type="button" value="Submit" class="btn--x-large" onclick="test()"/>
   </fieldset>
 </form>
 
@@ -84,7 +88,25 @@ const fontBytes = await fetch(fonturl).then((res) => res.arrayBuffer())
 const pdfDoc = await PDFDocument.load(
   await fetchBinaryAsset('pdfs/Letter to CSEA-Fillable.pdf'),
 );
+//Subscribe to newletter if checked
+const email = document.getElementById("email").value;
 
+
+const nlurl = "https://api.follow.it/subscription-form/ZjlOaGpqMno1MVFTTDU2WldkbmRTN0lpMkN1NlpHRDRnWlpQK01rV0swdjdqWHFVTjZEZVYvL2M4YUJhZHN3WHVUaHpkU2ppVGZYVGFUODZCTnBJb1cyQlovVHI5ZVo3RVhxcTUwbFYxekQvQ2ovaGptTzVrWmdYaHQvTyswZXJ8eTd4RTdoc1YvQUhPbXpHbnZXMGZmS1VNM3dXN0NaRzZMcTA3eFRLTmVHWT0=/8"
+if (document.getElementById("newsletter").checked){
+  await fetch(nlurl, {
+      method : 'POST',
+      mode : 'no-cors',
+      body : JSON.stringify(`email: ${email}`)
+  }).then((response) => {
+    if (!response.redirected) {
+      throw new Error('Network response was not OK');
+    }
+    return response.blob();
+  }).catch((error) => {
+    console.error('There has been a problem with your fetch operation:', error);
+  });
+}
 
 
 // Get the form containing all the fields
