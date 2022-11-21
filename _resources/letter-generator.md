@@ -4,9 +4,9 @@ collection: resources
 excerpt: "Use this form to generator a grievance letter to send to CSEA"
 page_js:
  - https://unpkg.com/pdf-lib/dist/pdf-lib.min.js
- - https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js
+ - https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.min.js
 header:
-  teaser: /assets/images/letter-preview.png
+  teaser: /assets/images/letter-preview.webp
 page_checkbox : True
 ---
 
@@ -23,10 +23,11 @@ Fill in the forms below and download the pdf.
       <input type="checkbox" class="larger-checkbox" id="newsletter" value=""/>   Subscribe to our Newsletter
     </label>
     <input type="button" value="Submit" class="btn--x-large" onclick="test()"/>
+
   </fieldset>
 </form>
 
-<script>
+<script async>
 
   const fetchBinaryAsset = (asset) =>
     fetch(`/assets/${asset}`).then((res) => res.arrayBuffer());
@@ -94,18 +95,13 @@ const email = document.getElementById("email").value;
 
 const nlurl = "https://api.follow.it/subscription-form/ZjlOaGpqMno1MVFTTDU2WldkbmRTN0lpMkN1NlpHRDRnWlpQK01rV0swdjdqWHFVTjZEZVYvL2M4YUJhZHN3WHVUaHpkU2ppVGZYVGFUODZCTnBJb1cyQlovVHI5ZVo3RVhxcTUwbFYxekQvQ2ovaGptTzVrWmdYaHQvTyswZXJ8eTd4RTdoc1YvQUhPbXpHbnZXMGZmS1VNM3dXN0NaRzZMcTA3eFRLTmVHWT0=/8"
 if (document.getElementById("newsletter").checked){
-  await fetch(nlurl, {
-      method : 'POST',
-      mode : 'no-cors',
-      body : JSON.stringify(`email: ${email}`)
-  }).then((response) => {
-    if (!response.redirected) {
-      throw new Error('Network response was not OK');
-    }
-    return response.blob();
-  }).catch((error) => {
-    console.error('There has been a problem with your fetch operation:', error);
-  });
+  document.getElementById("mce-EMAIL").value = document.getElementById("email").value;
+  try {
+    document.getElementById("mc-embedded-subscribe").click();
+  } catch (e) {
+    console.error(e);
+  }
+
 }
 
 
